@@ -196,35 +196,41 @@ class EnhancedOfflineTranslator:
         if src_lang not in self.nllb_languages or tgt_lang not in self.nllb_languages:
             return f"❌ Language not supported. Available: {list(self.nllb_languages.keys())}"
         
-        tokenizer = self.tokenizers[self.current_model_name]
+        # Split into sentences for better handling
+        import re
+        sentences = re.split(r'(?<=[.!?])\s+', text.strip())
+        if len(sentences) <= 1:
+            sentences = [text]
         
-        # Set source language
+        tokenizer = self.tokenizers[self.current_model_name]
         tokenizer.src_lang = self.nllb_languages[src_lang]
         
-        # Tokenize input
-        inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=512)
-        
-        # Move to same device as model
+        translations = []
         device = next(self.current_model.parameters()).device
-        inputs = {k: v.to(device) for k, v in inputs.items()}
+        tgt_lang_code = self.nllb_languages[tgt_lang]
+        forced_bos_token_id = getattr(tokenizer, 'lang_code_to_id', {}).get(tgt_lang_code) or tokenizer.convert_tokens_to_ids(tgt_lang_code)
         
-        # Generate translation
-        with torch.no_grad():
-            tgt_lang_code = self.nllb_languages[tgt_lang]
-            forced_bos_token_id = getattr(tokenizer, 'lang_code_to_id', {}).get(tgt_lang_code) or tokenizer.convert_tokens_to_ids(tgt_lang_code)
+        for sentence in sentences:
+            if not sentence.strip():
+                continue
+                
+            inputs = tokenizer(sentence, return_tensors="pt", padding=True, truncation=True, max_length=512)
+            inputs = {k: v.to(device) for k, v in inputs.items()}
             
-            generated_tokens = self.current_model.generate(
-                **inputs,
-                forced_bos_token_id=forced_bos_token_id,
-                max_length=512,
-                num_beams=5,
-                early_stopping=True,
-                no_repeat_ngram_size=2
-            )
+            with torch.no_grad():
+                generated_tokens = self.current_model.generate(
+                    **inputs,
+                    forced_bos_token_id=forced_bos_token_id,
+                    max_length=512,
+                    num_beams=5,
+                    early_stopping=True,
+                    no_repeat_ngram_size=2
+                )
+            
+            translation = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)[0]
+            translations.append(translation)
         
-        # Decode translation
-        translation = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)[0]
-        return translation
+        return ' '.join(translations)
     
     def translate_mt5(self, text, src_lang, tgt_lang):
         """Translate using MT5/T5 model."""
