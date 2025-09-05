@@ -39,7 +39,7 @@ NLLB-200 supports 200+ languages with excellent quality for:
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd neural_mt_offline
+cd TraductAL
 
 # Install dependencies
 pip install -r requirements.txt
@@ -96,7 +96,7 @@ print(result["translation"])  # "Bonjour ä tous"
 ## 📁 Project Structure
 
 ```
-neural_mt_offline/
+TraductAL/
 ├── README.md                 # This file
 ├── requirements.txt          # Python dependencies
 ├── LICENSE                   # MIT License
