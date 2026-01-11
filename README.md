@@ -6,7 +6,7 @@ A multilingual translation system that runs entirely on your computer. No intern
 
 ---
 
-**📋 Licensing**: Free for academic/research use ([MIT License](LICENSE)) • [Commercial licensing available](COMMERCIAL_LICENSE.md) • [Professional services](COMMERCIAL_SERVICES.md)
+**📋 Licensing**: Free for academic/research use ([MIT License](LICENSE)) • [Commercial use - contact me](COMMERCIAL_LICENSE.md) • [Possible services](COMMERCIAL_SERVICES.md)
 
 ---
 
@@ -174,28 +174,16 @@ TraductAL is available under **dual licensing** to serve both academic and comme
 
 See [LICENSE](LICENSE) for full terms.
 
-#### 💼 Commercial License
-**REQUIRED** for:
-- Commercial products and services
-- Enterprise deployments
-- SaaS and hosted services
-- Consulting and client projects
+#### 💼 Commercial Use
+**For commercial use**, please contact: relanir@bluewin.ch
 
-**Pricing:**
-- Professional: $2,500/year
-- Enterprise: $15,000/year
-- OEM/Redistribution: Custom
+I'm open to discussing:
+- Commercial licensing arrangements
+- Custom adaptations and consulting
+- Academic-industry collaborations
+- Reasonable terms based on your specific needs
 
-See [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md) for complete details.
-
-#### 🛠️ Professional Services
-We also offer:
-- Custom model fine-tuning (from $10,000)
-- On-premise deployment and integration
-- Training workshops and consulting
-- Domain-specific adaptations
-
-See [COMMERCIAL_SERVICES.md](COMMERCIAL_SERVICES.md) for all offerings.
+See [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md) and [COMMERCIAL_SERVICES.md](COMMERCIAL_SERVICES.md) for framework (pricing to be determined based on actual use cases).
 
 ### Third-Party Model Licenses
 

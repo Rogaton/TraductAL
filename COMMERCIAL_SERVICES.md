@@ -4,21 +4,22 @@
 
 ---
 
-> 🛠️ **STATUS**: Professional services framework in development
+> 🛠️ **IMPORTANT**: This is an **exploratory document**, not established services
 >
-> This document outlines our planned service offerings. We are currently:
-> - Building client onboarding processes
-> - Establishing service delivery infrastructure
-> - Developing pricing models based on early feedback
+> **Status**: I'm an independent researcher with deep expertise in computational linguistics, considering how to support commercial applications of TraductAL.
+>
+> **The services and pricing below are speculative** - they represent what *might* be possible, not what I'm currently offering. I'm:
+> - Exploring what organizations actually need
+> - Learning what fair compensation looks like
+> - Open to discussing pilot projects
+> - Interested in academic-industry collaborations
 >
 > **Available NOW**:
 > - Academic collaboration (free for research institutions)
-> - Early adopter pilot projects (contact us)
-> - Consultation calls to discuss your needs
+> - Exploratory discussions about your needs
+> - Guidance on using TraductAL
 >
-> **Contact**: relanir@bluewin.ch to discuss your translation challenges
->
-> Expected full service launch: Q1-Q2 2026
+> **Contact**: relanir@bluewin.ch - Let's talk honestly about what you need and whether I can help
 
 ---
 

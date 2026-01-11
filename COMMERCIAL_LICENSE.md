@@ -4,17 +4,20 @@
 
 ---
 
-> 📋 **STATUS**: Commercial licensing framework in development
+> 📋 **IMPORTANT**: This is a **framework document**, not firm pricing
 >
-> This document outlines our planned commercial licensing structure. We are currently:
-> - Finalizing payment infrastructure
-> - Completing legal review
-> - Setting up support systems
+> **Status**: I'm an independent researcher exploring commercial possibilities for TraductAL.
+>
+> **The pricing in this document is indicative only** - drawn from industry research to provide a reference point. Actual terms will be determined through discussion based on:
+> - Your specific use case and needs
+> - Scale of deployment
+> - Type of organization (startup, enterprise, non-profit)
+> - Reasonable compensation for ongoing development
 >
 > **Available NOW**: Academic/research use (free MIT License)
-> **Interested in commercial licensing?** Contact: relanir@bluewin.ch for early access and custom terms
 >
-> Expected full commercial launch: Q1 2026
+> **Interested in commercial use?** Contact: relanir@bluewin.ch
+> Let's have an honest conversation about what makes sense for both of us.
 
 ---
 
