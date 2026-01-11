@@ -6,7 +6,7 @@ A multilingual translation system that runs entirely on your computer. No intern
 
 ---
 
-**📋 License**: [MIT License](LICENSE) - Free for all uses • [Support development (donations)](COMMERCIAL_LICENSE.md)
+**📋 License**: [MIT License](LICENSE) - Free for all uses • [Support development](SUPPORT.md)
 
 ---
 
@@ -178,7 +178,7 @@ See [LICENSE](LICENSE) for full terms.
 
 TraductAL is developed by an independent researcher. If you find it useful:
 
-**Optional donations** help support continued development. See donation options in [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md).
+**Optional donations** help support continued development. See [SUPPORT.md](SUPPORT.md) for options.
 
 **Academic collaboration**: Contact relanir@bluewin.ch for research partnerships.
 
