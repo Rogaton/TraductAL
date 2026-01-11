@@ -23,23 +23,73 @@
 
 ---
 
-## Who We Serve
+## What I Can Actually Help With
 
-TraductAL is designed for organizations that need:
+**My background**: Computational linguist with three Master's degrees (French Literature, Computational Linguistics, Computer Science from EPFL). My expertise is in **linguistic analysis and NLP**, not IT infrastructure.
 
-✅ **Privacy-first translation** - 100% offline, no data leaves your infrastructure
-✅ **Low-resource language support** - 1811 languages including Celtic, Romansh, indigenous languages
-✅ **Hybrid neural-symbolic validation** - Explainable translation with linguistic rule checking
-✅ **Custom domain adaptation** - Fine-tuned models for your specific industry/terminology
-✅ **On-premise deployment** - Air-gapped installations for government, defense, legal, healthcare
+**Where I can add value:**
 
-If Google Translate and DeepL don't serve your language needs or privacy requirements, TraductAL provides specialized solutions.
+✅ **Linguistic consulting**:
+- Grammar formalism and DCG design
+- Low-resource language strategies
+- Translation quality evaluation
+- Terminology development
+
+✅ **NLP guidance**:
+- Understanding hybrid neural-symbolic approaches
+- Language pair selection and optimization
+- Model evaluation and comparison
+- Research collaboration
+
+✅ **Translation services**:
+- Technical writing and documentation
+- Review and quality assurance
+- Linguistic analysis
+
+**Where I CANNOT help:**
+❌ IT infrastructure / deployment
+❌ System administration
+❌ Enterprise DevOps
+❌ 24/7 technical support
+❌ Hardware issues
+
+**The code is open source** - use it freely. If you need linguistic expertise, I'm available. If you need IT support, hire a systems administrator.
 
 ---
 
-## Our Services
+## What I Can Realistically Offer
 
-### 1. Software Licensing
+### Linguistic Consulting (What I'm Qualified For)
+
+**Hourly rate**: To be determined based on project
+**My expertise**: Computational linguistics, grammar formalism, NLP
+
+**Examples of what I can help with:**
+
+1. **Grammar Development**:
+   - Design DCG rules for your language
+   - Validate terminology and linguistic patterns
+   - Review translation quality from linguistic perspective
+
+2. **NLP Strategy**:
+   - Advise on translation approaches for specific languages
+   - Help evaluate model performance
+   - Research collaboration on hybrid systems
+
+3. **Translation & Writing**:
+   - Technical documentation in French/English
+   - Linguistic review and quality assurance
+   - Academic writing support
+
+**How it works**: Contact me with your specific need. We discuss scope, timeline, and fair compensation. No fancy pricing structure - just honest consulting.
+
+---
+
+## Speculative Services (Not Currently Offered)
+
+**Reality check**: The sections below describe *potential* services based on what organizations might need, but I'm NOT currently set up to provide these. They're here as "food for thought" if you have ideas.
+
+### 1. Using TraductAL (Free - MIT License)
 
 Choose the right license for your organization.
 

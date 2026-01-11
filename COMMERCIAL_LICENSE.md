@@ -251,26 +251,23 @@ See `THIRD_PARTY_LICENSES.md` for complete attribution.
 
 ---
 
-## Support Terms
+## What I Can (and Cannot) Help With
 
-### Response Times:
-- **Professional**: Best-effort, 5 business days
-- **Enterprise**: 2 business days for critical issues
-- **OEM**: 24 hours for critical, 1 business day for normal
+**My expertise** is in computational linguistics and NLP:
+- ✅ **Linguistic advice**: Grammar formalism, DCG rules, language-specific issues
+- ✅ **NLP guidance**: Translation approaches, model selection, language pairs
+- ✅ **Conceptual help**: Understanding how the hybrid architecture works
+- ✅ **Translation services**: Technical writing, review, linguistic consulting
+- ✅ **Academic collaboration**: Research questions, joint projects
 
-### Support Channels:
-- Email: [Support Email]
-- Priority issue tracker (commercial customers only)
-- Scheduled video calls (Enterprise and above)
+**What I'm NOT qualified for:**
+- ❌ IT support / system administration
+- ❌ Debugging infrastructure issues
+- ❌ Enterprise deployment / DevOps
+- ❌ 24/7 technical support
+- ❌ Hardware/network troubleshooting
 
-### Support Scope:
-- ✅ Installation and configuration assistance
-- ✅ Bug reports and fixes
-- ✅ Usage guidance and best practices
-- ✅ Integration consulting
-- ❌ Custom development (see Professional Services)
-- ❌ Training your staff (see add-on services)
-- ❌ Third-party model issues (contact model providers)
+**For technical/IT issues:** TraductAL is open-source software. Use GitHub Issues for community support, or hire an IT consultant if you need professional deployment help. I can point you to resources but I'm a linguist, not a system administrator.
 
 ---
 
