@@ -6,7 +6,7 @@ A multilingual translation system that runs entirely on your computer. No intern
 
 ---
 
-**📋 Licensing**: [MIT License](LICENSE) - Free for all (academic, personal, commercial) • [About commercial use & donations](COMMERCIAL_LICENSE.md)
+**📋 License**: [MIT License](LICENSE) - Free for all uses • [Support development (donations)](COMMERCIAL_LICENSE.md)
 
 ---
 
@@ -174,17 +174,13 @@ TraductAL is available under **dual licensing** to serve both academic and comme
 
 See [LICENSE](LICENSE) for full terms.
 
-#### 💼 Commercial Use
+#### 💝 Supporting Development
 
-**Contact me** if you're interested in commercial use: relanir@bluewin.ch
+TraductAL is developed by an independent researcher. If you find it useful:
 
-I'm an independent researcher, not a Silicon Valley company. The code is freely available under MIT License. If you find TraductAL valuable for commercial purposes:
+**Optional donations** help support continued development. See donation options in [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md).
 
-- **Donations are welcome** to support continued development
-- **Let's discuss** your needs and how I might help
-- **Collaboration opportunities** - I'm open to exploring partnerships
-
-I have detailed commercial framework documents ([COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md), [COMMERCIAL_SERVICES.md](COMMERCIAL_SERVICES.md)) but these are exploratory - starting points for conversation, not established pricing.
+**Academic collaboration**: Contact relanir@bluewin.ch for research partnerships.
 
 ### Third-Party Model Licenses
 
