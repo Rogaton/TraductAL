@@ -1,0 +1,78 @@
+{
+  "builder_name": "json",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "apertus-posttrain-romansh",
+  "dataset_size": 33535356,
+  "description": "",
+  "download_checksums": {
+    "hf://datasets/swiss-ai/apertus-posttrain-romansh@4c811b40dee7287f79c4cfa883154a4060c1c183/Dictionary/sft_dictionary_RG.jsonl": {
+      "num_bytes": 21193086,
+      "checksum": null
+    },
+    "hf://datasets/swiss-ai/apertus-posttrain-romansh@4c811b40dee7287f79c4cfa883154a4060c1c183/Dictionary/sft_dictionary_Surmiran.jsonl": {
+      "num_bytes": 5438956,
+      "checksum": null
+    },
+    "hf://datasets/swiss-ai/apertus-posttrain-romansh@4c811b40dee7287f79c4cfa883154a4060c1c183/Dictionary/sft_dictionary_Sursilvan.jsonl": {
+      "num_bytes": 1270668,
+      "checksum": null
+    },
+    "hf://datasets/swiss-ai/apertus-posttrain-romansh@4c811b40dee7287f79c4cfa883154a4060c1c183/Dictionary/sft_dictionary_Sutsilvan.jsonl": {
+      "num_bytes": 4239516,
+      "checksum": null
+    },
+    "hf://datasets/swiss-ai/apertus-posttrain-romansh@4c811b40dee7287f79c4cfa883154a4060c1c183/Human_Tu\u0308lu\u0308_Translations/SFT_Human.jsonl": {
+      "num_bytes": 142442,
+      "checksum": null
+    },
+    "hf://datasets/swiss-ai/apertus-posttrain-romansh@4c811b40dee7287f79c4cfa883154a4060c1c183/Idiom_identification/sft_idiom_identification.jsonl": {
+      "num_bytes": 3501822,
+      "checksum": null
+    },
+    "hf://datasets/swiss-ai/apertus-posttrain-romansh@4c811b40dee7287f79c4cfa883154a4060c1c183/Synthetic_Translation/sft_Sursilvan_quality_filtered.jsonl": {
+      "num_bytes": 30523,
+      "checksum": null
+    },
+    "hf://datasets/swiss-ai/apertus-posttrain-romansh@4c811b40dee7287f79c4cfa883154a4060c1c183/Synthetic_Translation/sft_grischun_quality_filtered.jsonl": {
+      "num_bytes": 225006,
+      "checksum": null
+    },
+    "hf://datasets/swiss-ai/apertus-posttrain-romansh@4c811b40dee7287f79c4cfa883154a4060c1c183/Synthetic_Translation/sft_surmiran_quality_filtered.jsonl": {
+      "num_bytes": 7719,
+      "checksum": null
+    },
+    "hf://datasets/swiss-ai/apertus-posttrain-romansh@4c811b40dee7287f79c4cfa883154a4060c1c183/Synthetic_Translation/sft_vallader_quality_filtered.jsonl": {
+      "num_bytes": 13866,
+      "checksum": null
+    }
+  },
+  "download_size": 36063604,
+  "features": {
+    "Prompt": {
+      "dtype": "string",
+      "_type": "Value"
+    },
+    "Answer": {
+      "dtype": "string",
+      "_type": "Value"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 69598960,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 33535356,
+      "num_examples": 46092,
+      "dataset_name": "apertus-posttrain-romansh"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}

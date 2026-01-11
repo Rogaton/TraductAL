@@ -1,0 +1,139 @@
+# TraductAL Docker Ignore File
+# Excludes unnecessary files from Docker build context
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# Models cache (will be downloaded on first run)
+models/
+*.bin
+*.safetensors
+*.gguf
+
+# Audio files
+*.mp3
+*.wav
+*.flac
+*.ogg
+audio_chunks/
+
+# Data files
+datasets/
+*.csv
+*.txt
+*.json
+raw_*.txt
+test_*.txt
+input.txt
+output.txt
+*_entries.json
+
+# Notebooks
+*.ipynb
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (include only essential ones in Dockerfile)
+TRAINING_GUIDE.md
+EVALUATION_SUMMARY.md
+ADD_LANGUAGES_GUIDE.md
+BATCH_TRANSLATION_EXAMPLES.md
+CHAMPOLLION_INSIGHT.md
+DCG_PARSER_SUMMARY.md
+DOCKER_DEPLOYMENT.md
+FUTURE_RESEARCH_DIRECTIONS.md
+GLOSSARY_EXTRACTION_QUICKSTART.md
+INTEGRATION_ARCHITECTURE.md
+INTEGRATION_SUMMARY.md
+ISSUES_AND_SOLUTIONS.md
+LANGUAGE_EXPANSION_SUMMARY.md
+MULTIMODAL_GUIDE.md
+PDF_GLOSSARY_EXTRACTION_GUIDE.md
+PRODUCTION_READINESS.md
+PROJECT_COMPLETION_SUMMARY.md
+ROMANSH_GUIDE.md
+SWISS_FRENCH_*.md
+TTS_INTEGRATION_SUMMARY.md
+WHISPER_INTEGRATION.md
+AUTHORSHIP_AND_ATTRIBUTION.md
+
+# Test files
+test_*.py
+*_test.py
+test_*.sh
+
+# Training files (not needed for production)
+train_*.py
+train_*.ipynb
+download_*.py
+examine_dataset.py
+run_training.sh
+
+# Translator variants (use only unified_translator.py)
+multi_model_translator.py
+fixed_multi_model_translator.py
+batch_news_translator.py
+
+# App variants (use only gradio_app.py)
+app.py
+simple_working_app.py
+professional_app.py
+professional_app_fixed.py
+progressive_app_*.py
+diagnostic_app.py
+enhanced_app.py
+
+# Specialized tools (not needed in production)
+glossary_extractor.py
+glossary_parser/
+swiss_french_*.py
+apertus_trealla_*.py
+
+# Shell scripts (not needed in container)
+*.sh
+!run_training.sh
+
+# Docker files
+Dockerfile
+Dockerfile.production
+.dockerignore
+docker-compose.yml
+
+# Temporary files
+*.tmp
+*.log
+*.cache
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# HuggingFace Spaces files (if deploying to Docker)
+.spacesignore
+README_HF.md
+README_DOCKER_SPACE.md

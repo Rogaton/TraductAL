@@ -1,0 +1,67 @@
+# TraductAL Production Dockerfile
+# Optimized for running the Gradio web application
+# Supports both CPU and GPU deployments
+# Updated: January 2026
+
+FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04
+
+# Set working directory
+WORKDIR /app
+
+# Prevent interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3.10 \
+    python3-pip \
+    python3-dev \
+    git \
+    wget \
+    curl \
+    ffmpeg \
+    libsndfile1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Upgrade pip
+RUN pip3 install --no-cache-dir --upgrade pip setuptools wheel
+
+# Copy requirements file
+COPY requirements_hf.txt .
+
+# Install Python dependencies
+RUN pip3 install --no-cache-dir -r requirements_hf.txt
+
+# Copy application files
+COPY gradio_app.py .
+COPY unified_translator.py .
+COPY apertus_translator.py .
+COPY nllb_translator.py .
+COPY tts_engine.py .
+COPY whisper_stt.py .
+COPY startup_check.py .
+
+# Copy documentation (optional)
+COPY README.md .
+COPY QUICKSTART.md .
+
+# Environment configuration
+ENV PYTHONUNBUFFERED=1 \
+    TRANSFORMERS_CACHE=/app/models \
+    HF_HOME=/app/models \
+    TOKENIZERS_PARALLELISM=false \
+    GRADIO_SERVER_NAME=0.0.0.0 \
+    GRADIO_SERVER_PORT=7860
+
+# Create models cache directory
+RUN mkdir -p /app/models
+
+# Expose Gradio port
+EXPOSE 7860
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=3 \
+    CMD curl -f http://localhost:7860/ || exit 1
+
+# Run startup check and launch application
+CMD ["python3", "gradio_app.py"]

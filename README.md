@@ -1,186 +1,208 @@
-# TraductAL - an offline Neural Machine Translation with NLLB-200
+# TraductAL - Offline Neural Translation System
 
-A completely offline, privacy-focused neural machine translation system powered by Meta's NLLB-200 models. All translations happen locally on your machine with no data sent to external servers.
+**65+ languages • 100% offline • Privacy-focused • No data collection**
 
-## ⚠️ Development Status & Disclaimer
+A multilingual translation system that runs entirely on your computer. No internet required after setup, no data sent anywhere.
 
-**USE AT YOUR OWN RISK** - This system is currently in active development and not ready for production use.
+---
 
-### Known Limitations:
-- **Incomplete translations**: Some words or text segments may be missing from output
-- **Quality varies**: Translation accuracy depends on language pair and text complexity  
-- **No quality guarantees**: Results may not be suitable for professional or critical use
-- **Model limitations**: Base NLLB-200 models may require fine-tuning for specific domains
+**📋 Licensing**: Free for academic/research use ([MIT License](LICENSE)) • [Commercial licensing available](COMMERCIAL_LICENSE.md) • [Professional services](COMMERCIAL_SERVICES.md)
 
-### Recommended Use:
-- ✅ Development and testing purposes
-- ✅ Personal experimentation with offline translation
-- ✅ Privacy-focused translation where perfect accuracy isn't critical
-- ❌ Production systems requiring reliable translations
-- ❌ Professional document translation without human review
-- ❌ Critical communications or legal documents
+---
 
-## 🔒 Privacy & Security
-- **100% Offline**: No internet connection required after setup
-- **Zero Data Leakage**: All processing happens locally
-- **Professional Grade**: Suitable for confidential document translation
-- **No Logging**: No translation history stored externally
+## 🎯 What It Does
 
-## 🌍 Language Support
-
-NLLB-200 supports 200+ languages with excellent quality for:
-- **European languages**: English, French, German, Spanish, Italian, Portuguese, Russian
-- **Asian languages**: Chinese, Japanese, Korean, Hindi, Arabic, Turkish
-- **Many more**: Including low-resource languages with good quality
+- Translates text between 65+ languages
+- Works completely offline after initial setup
+- Supports mainstream languages (English, French, German, Spanish, Russian, Chinese, Arabic, etc.)
+- Supports low-resource languages (Romansh dialects, Celtic languages, etc.)
+- Optional speech-to-text and text-to-speech
+- Web interface + command-line tools
 
 ## 🚀 Quick Start
 
-### Installation
 ```bash
-# Clone the repository
-git clone <repository-url>
+# 1. Install
+git clone https://github.com/Rogaton/TraductAL
 cd TraductAL
-
-# Install dependencies
 pip install -r requirements.txt
 
-# Download NLLB models
+# 2. Download models (one-time, ~3-10GB)
 python download_nllb_200.py
+
+# 3. Launch web interface
+./start_gradio.sh
+
+# Open browser to http://localhost:7860
 ```
 
-### Basic Usage
+## 🌍 Supported Languages
+
+**50 Mainstream Languages** (via NLLB-200):
+- European: English, French, German, Italian, Spanish, Portuguese, Dutch, Polish, Swedish, Danish, Norwegian, Finnish, Greek, Turkish, Romanian, Czech, Hungarian, and more
+- World: Russian, Chinese, Hindi, Arabic, Japanese, Korean
+- Asian: Vietnamese, Thai, Indonesian, Malay, Tamil, Bengali, Urdu, Persian, Hebrew
+- African: Swahili, Amharic, Hausa, Yoruba
+- Regional: Catalan, Galician, Basque, Ukrainian, Bulgarian, Serbian, Croatian, and more
+
+**15+ Low-Resource Languages** (via Apertus-8B):
+- Romansh: All 6 variants (Sursilvan, Vallader, Puter, Surmiran, Sutsilvan, Rumantsch Grischun)
+- Celtic: Welsh, Scottish Gaelic, Irish, Breton
+- Regional: Occitan, Luxembourgish, Friulian, Ladin, Sardinian
+
+## 🔒 Privacy & Offline
+
+- **100% offline** after initial model download
+- **No data collection** - everything stays on your machine
+- **No internet required** for translation
+- Perfect for confidential documents
+
+## ⚡ Usage
+
+### Web Interface (Recommended)
+```bash
+./start_gradio.sh
+# Open http://localhost:7860
+```
+
+### Command Line
 ```bash
 # Simple translation
 ./translate_enhanced.sh en fr "Hello, how are you?"
 
-# Interactive mode
-./translate_enhanced.sh interactive en fr
-
-# List available languages
-./translate_enhanced.sh list-languages
-
-# System health check
-./translate_enhanced.sh check
+# Output: Bonjour, comment allez-vous?
 ```
 
 ### Python API
 ```python
-from nllb_translator import EnhancedOfflineTranslator
+from unified_translator import UnifiedTranslator
 
-translator = EnhancedOfflineTranslator()
+translator = UnifiedTranslator()
 result = translator.translate("Hello world", "en", "fr")
-print(result["translation"])  # "Bonjour ä tous"
+print(result["translation"])  # Bonjour le monde
 ```
 
-## 📊 Model Options
+## 💻 System Requirements
 
-### NLLB-200-1.3B (Recommended)
-- **Size**: ~2.6GB
-- **Speed**: 0.5-1.0 seconds per sentence
-- **Memory**: ~3GB RAM
-- **Quality**: Very High
+**Minimum:**
+- Python 3.8+
+- 8GB RAM
+- 5GB disk space
 
-### NLLB-200-3.3B (Maximum Quality)
-- **Size**: ~6.6GB  
-- **Speed**: 1.0-2.0 seconds per sentence
-- **Memory**: ~7GB RAM
-- **Quality**: Excellent
+**Recommended:**
+- Python 3.10+
+- 16GB RAM
+- 10GB disk space
+- GPU optional (faster with GPU)
 
-## 🛠️ System Requirements
+## ⚠️ Important Notes
 
-- **Python**: 3.8+
-- **RAM**: 4GB minimum (8GB recommended)
-- **Storage**: 3-7GB for models
-- **OS**: Linux, macOS, Windows
+- **Development software**: Use at your own risk
+- **Translation quality varies** by language pair
+- **Not for critical use**: Professional translation may require human review
+- **First run is slow**: Models download automatically (~3-10GB)
 
-## 📁 Project Structure
+## 📚 Documentation
+
+- **Full technical documentation**: See `docs/README_DETAILED.md` for complete details
+- **Adding languages**: See `docs/ADD_LANGUAGES_GUIDE.md`
+- **Batch translation**: See `docs/BATCH_TRANSLATION_EXAMPLES.md`
+- **Audio features**: See `docs/MULTIMODAL_GUIDE.md`
+- **Architecture & integration**: See `docs/INTEGRATION_ARCHITECTURE.md`
+- **Prolog validation**: See `docs/DCG_PARSER_SUMMARY.md`
+- **All documentation**: Browse the `docs/` directory
+
+## 🛠️ Two Models, One System
+
+TraductAL uses two translation engines:
+
+1. **NLLB-200** (Meta): Fast, accurate, 200+ languages
+2. **Apertus-8B**: Specialized for low-resource languages (1811 languages)
+
+The system automatically picks the best model for your language pair.
+
+## 🎓 Academic Use
+
+See `AUTHORSHIP_AND_ATTRIBUTION.md` for citation guidelines and transparency about AI-assisted development.
+
+## 📂 Project Structure
 
 ```
 TraductAL/
-├── README.md                 # This file
-├── requirements.txt          # Python dependencies
-├── LICENSE                   # MIT License
-├── nllb_translator.py        # Main translator class
-├── translate_enhanced.sh     # Command-line interface
-├── download_nllb_200.py      # Model downloader
-├── migrate_to_nllb.py        # Migration utility
-├── NLLB_UPGRADE_GUIDE.md     # Detailed upgrade guide
-├── QUICK_REFERENCE.md        # Command reference
-├── MIGRATION_SUMMARY.md      # Migration documentation
-└── models/
-    └── deployed_models/
-        ├── nllb_200_1.3b/   # NLLB 1.3B model files
-        └── nllb_200_3.3b/   # NLLB 3.3B model files
+├── README.md                    # This file - user guide
+├── QUICKSTART.md               # Quick start guide
+├── LICENSE                     # MIT License
+├── AUTHORSHIP_AND_ATTRIBUTION.md  # Academic citations
+├── requirements.txt            # Core dependencies
+├── requirements_enhanced.txt   # Optional features (STT/TTS)
+│
+├── Core Application Files
+│   ├── gradio_app.py          # Main web interface (65+ languages)
+│   ├── unified_translator.py   # Unified translation engine
+│   ├── nllb_translator.py     # NLLB-200 engine
+│   ├── apertus_translator.py  # Apertus-8B engine
+│   ├── apertus_trealla_hybrid.py  # Hybrid neural-symbolic
+│   ├── whisper_stt.py         # Speech-to-text
+│   ├── tts_engine.py          # Text-to-speech
+│   └── startup_check.py       # System verification
+│
+├── Scripts
+│   ├── start_gradio.sh        # Launch web interface
+│   ├── translate_enhanced.sh  # CLI translation
+│   └── download_nllb_200.py   # Download models
+│
+├── glossary_parser/           # Prolog DCG parser (linguistic)
+├── docs/                      # All documentation (40+ files)
+├── scripts/                   # Utility scripts & training
+├── data/samples/              # Test data & samples
+└── docker/                    # Docker configuration
 ```
-
-## 🔧 Advanced Usage
-
-### Batch Translation
-```bash
-# Translate multiple lines
-echo -e "Hello\nGoodbye\nThank you" | ./translate_enhanced.sh en fr
-
-# Translate from file
-./translate_enhanced.sh en fr "$(cat input.txt)"
-```
-
-### Model Selection
-```python
-# Use specific model
-translator = EnhancedOfflineTranslator()
-result = translator.translate("Hello", "en", "fr", model="nllb_200_3_3b")
-```
-
-### Performance Monitoring
-```python
-result = translator.translate("Hello world", "en", "fr")
-print(f"Translation time: {result['time']:.2f}s")
-print(f"Model used: {result['method']}")
-```
-
-## 🌟 Key Features
-
-- **High-quality translations** with NLLB-200 models
-- **200+ language support** including low-resource languages
-- **Bidirectional translation** for all language pairs
-- **Automatic model selection** based on availability
-- **Performance monitoring** and optimization
-- **Professional-grade privacy** with offline operation
-- **Easy integration** with Python API and shell commands
-
-## 🔄 Migration from Other Systems
-
-If you're migrating from MT5 or other translation systems:
-
-```bash
-# Run the migration script
-python migrate_to_nllb.py
-
-# Follow the upgrade guide
-cat NLLB_UPGRADE_GUIDE.md
-```
-
-## 📖 Documentation
-
-- **[NLLB_UPGRADE_GUIDE.md](NLLB_UPGRADE_GUIDE.md)**: Detailed upgrade instructions
-- **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)**: Command reference sheet
-- **[MIGRATION_SUMMARY.md](MIGRATION_SUMMARY.md)**: Migration documentation
-- **[LICENSE_INFO.md](LICENSE_INFO.md)**: Licensing information
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+### Dual Licensing Options
 
-## 🙏 Acknowledgments
+TraductAL is available under **dual licensing** to serve both academic and commercial needs:
 
-- **Meta AI** for the NLLB-200 models
-- **Hugging Face** for the Transformers library
-- **PyTorch** team for the deep learning framework
+#### 🎓 MIT License (Academic & Non-Commercial)
+**FREE** for:
+- Universities and research institutions
+- Non-profit organizations
+- Personal use and experimentation
+- Startups with revenue < $100,000 USD
+- Open-source projects
+
+See [LICENSE](LICENSE) for full terms.
+
+#### 💼 Commercial License
+**REQUIRED** for:
+- Commercial products and services
+- Enterprise deployments
+- SaaS and hosted services
+- Consulting and client projects
+
+**Pricing:**
+- Professional: $2,500/year
+- Enterprise: $15,000/year
+- OEM/Redistribution: Custom
+
+See [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md) for complete details.
+
+#### 🛠️ Professional Services
+We also offer:
+- Custom model fine-tuning (from $10,000)
+- On-premise deployment and integration
+- Training workshops and consulting
+- Domain-specific adaptations
+
+See [COMMERCIAL_SERVICES.md](COMMERCIAL_SERVICES.md) for all offerings.
+
+### Third-Party Model Licenses
+
+TraductAL integrates open-source models with their own licenses:
+- **NLLB-200**: CC-BY-NC 4.0 (non-commercial only) - see COMMERCIAL_LICENSE.md for commercial alternatives
+- **Apertus-8B**: Apache 2.0 (commercial use permitted)
 
 ---
 
-**Ready to translate?** Run `python download_nllb_200.py` to get started!
+**Need the full technical documentation?** See `docs/README_DETAILED.md` for complete details.

@@ -1,0 +1,25 @@
+# Requirements for fine-tuning NLLB-200 on HuggingFace Spaces
+# Optimized for T4 GPU environment
+
+# Core dependencies
+torch>=2.0.0
+transformers>=4.35.0
+datasets>=2.14.0
+accelerate>=0.24.0
+huggingface-hub>=0.19.0
+
+# Training utilities
+tensorboard>=2.14.0
+sentencepiece>=0.1.99
+protobuf>=3.20.0
+
+# Data processing
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Progress tracking
+tqdm>=4.65.0
+
+# Optional but recommended
+psutil>=5.9.0  # Monitor memory usage
+py-cpuinfo>=9.0.0  # System info

@@ -1,0 +1,70 @@
+# TraductAL Clean Directory Structure
+# Ready for distribution to linguists and computational linguists
+
+## Root Directory (22 essential files)
+
+### Documentation (4 files)
+- README.md                      [User-friendly guide]
+- QUICKSTART.md                  [Quick start]
+- LICENSE                        [MIT License]
+- AUTHORSHIP_AND_ATTRIBUTION.md  [Academic citations]
+
+### Core Application (8 files)
+- gradio_app.py                  [Main web interface - 65+ languages]
+- unified_translator.py          [Unified translation engine]
+- nllb_translator.py             [NLLB-200 engine]
+- apertus_translator.py          [Apertus-8B engine]
+- apertus_trealla_hybrid.py      [Hybrid neural-symbolic]
+- whisper_stt.py                 [Speech-to-text]
+- tts_engine.py                  [Text-to-speech]
+- startup_check.py               [System verification]
+
+### Scripts (3 files)
+- start_gradio.sh                [Launch web interface]
+- translate_enhanced.sh          [CLI translation]
+- download_nllb_200.py           [Download models]
+
+### Configuration (2 files)
+- requirements.txt               [Core dependencies]
+- requirements_enhanced.txt      [Optional features]
+
+### Directories (5 folders)
+- glossary_parser/               [Prolog DCG parser - linguistic focus]
+- docs/                          [All documentation - 41 files]
+- scripts/                       [Utility scripts - 30 files]
+- data/samples/                  [Test data - 8 files]
+- docker/                        [Docker config - 3 files]
+
+## Organized Structure Benefits
+
+✅ Professional appearance
+✅ Easy navigation - essentials immediately visible
+✅ Clean for academic distribution
+✅ Ready for linguist/computational linguist mailing lists
+✅ Prepared for GitHub/Hugging Face upload
+✅ All functionality preserved
+
+## File Count Summary
+
+Before cleanup: 103 files in root directory
+After cleanup:   22 files in root directory (78% reduction)
+- 41 docs moved to docs/
+- 30 scripts moved to scripts/
+- 8 samples moved to data/samples/
+- 3 Docker files moved to docker/
+
+## Quick Access for Users
+
+Main entry points:
+1. README.md - Start here
+2. ./start_gradio.sh - Launch web interface
+3. docs/README_DETAILED.md - Complete technical documentation
+
+## Distribution Ready
+
+The project is now ready for:
+- Linguist mailing lists
+- Computational linguistics forums
+- Academic conferences
+- GitHub public repository
+- Hugging Face model/space hosting

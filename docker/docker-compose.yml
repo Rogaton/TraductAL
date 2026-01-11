@@ -1,0 +1,95 @@
+# TraductAL Docker Compose Configuration
+# Easy deployment for local or server environments
+# Supports both CPU-only and GPU configurations
+# Updated: January 2026
+
+version: '3.8'
+
+services:
+  # Main TraductAL application service
+  traductal:
+    build:
+      context: .
+      dockerfile: Dockerfile.production
+    container_name: traductal-app
+    ports:
+      - "7860:7860"
+    volumes:
+      # Persist model cache across container restarts
+      - traductal-models:/app/models
+      # Optional: mount local audio files for processing
+      - ./audio_input:/app/audio_input:ro
+      # Optional: mount output directory
+      - ./audio_output:/app/audio_output
+    environment:
+      # Application settings
+      - TRANSFORMERS_CACHE=/app/models
+      - HF_HOME=/app/models
+      - TOKENIZERS_PARALLELISM=false
+      - GRADIO_SERVER_NAME=0.0.0.0
+      - GRADIO_SERVER_PORT=7860
+
+      # Optional: Set HuggingFace token for private models
+      # - HF_TOKEN=${HF_TOKEN}
+
+      # Performance tuning (adjust based on your system)
+      - OMP_NUM_THREADS=4
+      - MKL_NUM_THREADS=4
+
+    # Resource limits (adjust based on your system)
+    deploy:
+      resources:
+        limits:
+          cpus: '8'
+          memory: 32G
+        reservations:
+          cpus: '4'
+          memory: 16G
+
+    # Restart policy
+    restart: unless-stopped
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7860/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+
+  # GPU-enabled service (uncomment to use)
+  # traductal-gpu:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.production
+  #   container_name: traductal-app-gpu
+  #   ports:
+  #     - "7860:7860"
+  #   volumes:
+  #     - traductal-models:/app/models
+  #     - ./audio_input:/app/audio_input:ro
+  #     - ./audio_output:/app/audio_output
+  #   environment:
+  #     - TRANSFORMERS_CACHE=/app/models
+  #     - HF_HOME=/app/models
+  #     - TOKENIZERS_PARALLELISM=false
+  #     - GRADIO_SERVER_NAME=0.0.0.0
+  #     - GRADIO_SERVER_PORT=7860
+  #     - CUDA_VISIBLE_DEVICES=0
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - driver: nvidia
+  #             count: 1
+  #             capabilities: [gpu]
+  #   restart: unless-stopped
+
+volumes:
+  # Named volume for model persistence
+  traductal-models:
+    driver: local
+
+networks:
+  default:
+    name: traductal-network

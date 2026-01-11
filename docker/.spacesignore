@@ -1,0 +1,22 @@
+# Files to exclude from HF Space
+*.md
+!DOCKER_DEPLOYMENT.md
+*.ipynb
+*.pyc
+__pycache__/
+.git/
+.gitignore
+models/
+diagnostic_app.py
+enhanced_app.py
+fixed_multi_model_translator.py
+multi_model_translator.py
+professional_app.py
+professional_app_fixed.py
+progressive_app_v1.py
+progressive_app_v2.py
+simple_working_app.py
+download_nllb_200.py
+nllb_translator.py
+app.py
+download_finetuned_model.py

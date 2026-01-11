@@ -1,0 +1,40 @@
+# TraductAL - HuggingFace Spaces Requirements
+# Optimized for HF Spaces deployment
+# Updated: January 2026
+
+# Core Deep Learning
+torch>=2.0.0,<2.3.0
+transformers>=4.35.0
+sentencepiece>=0.1.99
+protobuf>=3.20.0
+
+# Web Interface
+gradio>=4.0.0
+
+# Speech Recognition (Whisper)
+openai-whisper>=20231117
+torchaudio>=2.0.0
+
+# Audio Processing
+librosa>=0.10.0
+soundfile>=0.12.0
+
+# Text-to-Speech (MMS-TTS)
+# Included in transformers
+
+# HuggingFace Integration
+huggingface-hub>=0.19.0
+accelerate>=0.24.0
+
+# Core Dependencies
+numpy>=1.24.0,<2.0.0
+scipy>=1.11.0
+
+# Optional but recommended
+safetensors>=0.4.0
+
+# For batch processing
+tqdm>=4.65.0
+
+# System utilities
+psutil>=5.9.0

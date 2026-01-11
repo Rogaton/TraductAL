@@ -1,0 +1,21 @@
+id,standard_french,swiss_french_valais,swiss_french_geneva,swiss_french_fribourg,topic,difficulty
+1,Bonjour comment allez-vous?,Bonjour comment allez-vous?,Bonjour ça joue?,Bonjour comment allez-vous?,greetings,easy
+2,Je vais faire le ménage,Je vais faire le réduit,Je vais poutzer,Je vais poutser,household,easy
+3,Passe-moi la serpillière,Passe-moi la panosse,Passe-moi la panosse,Passe-moi la panosse,household,easy
+4,Il pleut beaucoup dehors,Il pleut beaucoup dehors,Il drache dehors,Il pleut beaucoup dehors,weather,easy
+5,C'est le désordre ici,C'est le désordre ici,C'est le ribouis ici,C'est le cheni ici,household,easy
+6,Il y a soixante-dix personnes,Il y a septante personnes,Il y a septante personnes,Il y a septante personnes,numbers,easy
+7,Ça coûte quatre-vingts francs,Ça coûte huitante francs,Ça coûte quatre-vingts francs,Ça coûte quatre-vingts francs,numbers,medium
+8,Il y a quatre-vingt-dix élèves,Il y a nonante élèves,Il y a nonante élèves,Il y a nonante élèves,numbers,easy
+9,On prend le petit-déjeuner à 7h,On déjeune à 7h,On déjeune à 7h,On déjeune à 7h,meals,easy
+10,Le déjeuner est à midi,Le dîner est à midi,Le dîner est à midi,Le dîner est à midi,meals,easy
+11,Le dîner est à 19h,Le souper est à 19h,Le souper est à 19h,Le souper est à 19h,meals,easy
+12,J'ai attrapé froid,Je me suis refroidi,Je me suis refroidi,Je me suis refroidi,health,medium
+13,Il faut se dépêcher,Il faut se pouiller,Il faut se grouiller,Il faut se grouiller,expressions,medium
+14,Donne-moi un sac plastique,Donne-moi un cornet,Donne-moi un cornet,Donne-moi un cornet,shopping,easy
+15,Passe-moi la serviette,Passe-moi le linge,Passe-moi le linge,Passe-moi le linge,household,easy
+16,Je n'ai plus d'argent,Je n'ai plus d'argent,J'ai plus de crousille,J'ai plus de sous,money,medium
+17,Attention à la flaque!,Attention à la gouille!,Attention à la gouille!,Attention à la gouille!,warnings,easy
+18,Les enfants mangent des bonbons,Les enfants mangent des bonbons,Les enfants mangent des bonbons,Les enfants mangent des bolzes,food,easy
+19,On se retrouve à la cave,On se retrouve à la cave,On se retrouve au carnotzet,On se retrouve à la cave,places,medium
+20,Quel désordre dans ta chambre!,Quel désordre dans ta chambre!,Quel ribouis dans ta chambre!,Quel cheni dans ta chambre!,household,easy
