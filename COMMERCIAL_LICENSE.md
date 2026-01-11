@@ -1,23 +1,47 @@
-# TraductAL Commercial License
+# About Commercial Use & Supporting TraductAL
 
 **Version 1.0 - January 2026**
 
 ---
 
-> 📋 **IMPORTANT**: This is a **framework document**, not firm pricing
+> 💡 **The Simple Version**
 >
-> **Status**: I'm an independent researcher exploring commercial possibilities for TraductAL.
+> **TraductAL is MIT Licensed - free for everyone**, including commercial use.
 >
-> **The pricing in this document is indicative only** - drawn from industry research to provide a reference point. Actual terms will be determined through discussion based on:
-> - Your specific use case and needs
-> - Scale of deployment
-> - Type of organization (startup, enterprise, non-profit)
-> - Reasonable compensation for ongoing development
+> If you're using TraductAL commercially and find it valuable:
+> - **Donations are welcome** to support continued development
+> - **Contact me** (relanir@bluewin.ch) to discuss how we might collaborate
+> - **Let's talk** about your needs - I'm learning what commercial users actually want
 >
-> **Available NOW**: Academic/research use (free MIT License)
+> I'm an independent researcher, not a company. The detailed "commercial license" framework below is exploratory - it shows what *might* be possible, not what I'm currently charging. Think of it as **"ideas for discussion"** rather than established pricing.
+
+---
+
+## A Note on Donations
+
+If TraductAL saves you time or helps your business, consider supporting its development:
+
+**Why donations matter:**
+- Funds continued development (new languages, features, improvements)
+- Supports an independent researcher vs. corporate-owned alternatives
+- Keeps the project open-source and community-focused
+
+**How to support:**
+- Contact: relanir@bluewin.ch for donation options
+- Or sponsor specific features you need
+- Or contribute code, documentation, or translations
+
+**No obligation** - the code remains free regardless.
+
+---
+
+## Detailed Framework (Exploratory)
+
+> ⚠️ **READ THIS FIRST**: The pricing structure below is **not established or binding**.
 >
-> **Interested in commercial use?** Contact: relanir@bluewin.ch
-> Let's have an honest conversation about what makes sense for both of us.
+> I'm an independent researcher exploring what fair commercial arrangements might look like. This document provides reference points drawn from industry research, but actual terms would be determined through honest discussion about your needs and my capacity to help.
+>
+> **Contact relanir@bluewin.ch** to discuss your situation.
 
 ---
 
