@@ -12,21 +12,15 @@ See [LICENSE](LICENSE) file for full terms.
 
 ## Supporting Development (Optional)
 
-TraductAL is developed and maintained by an independent researcher. If you find it useful and want to support continued development:
+TraductAL is developed and maintained by an independent researcher in Switzerland. If you find it useful and want to support continued development, you can make a donation via bank transfer.
 
-### Donation Options
+**Contact**: relanir@bluewin.ch
 
-**PayPal**: [Coming soon - setting up]
-
-**Bank Transfer**: Contact relanir@bluewin.ch for details
-
-**GitHub Sponsors**: [Coming soon - being configured]
-
-**Other**: Contact relanir@bluewin.ch to discuss
+I'll provide bank details (IBAN) for direct transfer. Simple, no platforms, no fees.
 
 ---
 
-### What Donations Support
+## What Donations Support
 
 - Adding new languages
 - Improving translation quality
@@ -49,7 +43,7 @@ TraductAL code is MIT Licensed, but it uses models with different licenses:
 **NLLB-200 (Meta AI)**
 - License: CC-BY-NC 4.0
 - **Non-commercial use only**
-- If using TraductAL commercially, use Apertus-8B instead or get separate license from Meta
+- If using TraductAL commercially, use Apertus-8B instead or obtain separate license from Meta
 
 **Apertus-8B**
 - License: Apache 2.0
