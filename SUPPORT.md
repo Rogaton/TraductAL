@@ -51,7 +51,7 @@ TraductAL code is MIT Licensed, but it uses models with different licenses:
 
 ---
 
-**Rogaton** - Independent Computational Linguist
-Switzerland • relanir@bluewin.ch • https://modular9.org
+**Rogaton** - Independent researcher
+• relanir@bluewin.ch • https://modular9.org
 
-*Three Master's degrees: French Literature (Geneva, 1984), Computational Linguistics (Geneva, 1991), Computer Science (EPFL, 1996)*
+
