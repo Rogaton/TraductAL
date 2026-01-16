@@ -205,8 +205,16 @@ ENGINE_OPTIONS = {
     "Apertus8B (Swiss Specialist)": "apertus"
 }
 
+# NLLB Model Options - user can select specific model
+NLLB_MODEL_OPTIONS = {
+    "Auto (Best Available)": None,
+    "NLLB-200-3.3B (Highest Quality)": "nllb_200_3.3b",
+    "NLLB-200-1.3B (Fast)": "nllb_200_1.3b",
+    "NLLB-200-Distilled-1.3B (Fastest)": "nllb_200_distilled_1.3b"
+}
 
-def translate_text(text, src_lang_name, tgt_lang_name, engine_name, show_details):
+
+def translate_text(text, src_lang_name, tgt_lang_name, engine_name, nllb_model_name, show_details):
     """Translate text with selected parameters."""
     if not text.strip():
         return "⚠️ Please enter text to translate", ""
@@ -214,12 +222,13 @@ def translate_text(text, src_lang_name, tgt_lang_name, engine_name, show_details
     src_code = ALL_LANGUAGES.get(src_lang_name)
     tgt_code = ALL_LANGUAGES.get(tgt_lang_name)
     engine = ENGINE_OPTIONS.get(engine_name)
+    model_name = NLLB_MODEL_OPTIONS.get(nllb_model_name) if nllb_model_name else None
 
     if not src_code or not tgt_code:
         return "❌ Invalid language selection", ""
 
     # Perform translation
-    result = translator.translate(text, src_code, tgt_code, engine=engine)
+    result = translator.translate(text, src_code, tgt_code, engine=engine, model_name=model_name)
 
     if "error" in result:
         return f"❌ Translation Error:\n{result['error']}", ""
@@ -424,33 +433,29 @@ def audio_to_audio_pipeline(audio_file, src_lang_name, tgt_lang_name):
         return transcription, translation, None, f"⚠️ TTS failed: {str(e)}"
 
 
-# Create Gradio interface
-with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.themes.Soft()) as demo:
+# Create Gradio interface with professional theme
+# Using Base theme for clean, professional look
+with gr.Blocks(title="TraductAL - Professional Translation System", theme=gr.themes.Base()) as demo:
 
-    tts_status_msg = " + MMS-TTS" if tts_enabled else ""
-    whisper_status_msg = " + Whisper STT" if whisper_enabled else ""
+    tts_status_msg = " + TTS" if tts_enabled else ""
+    whisper_status_msg = " + STT" if whisper_enabled else ""
 
     # Count languages dynamically
     total_languages = len(ALL_LANGUAGES)
     nllb_count = len(NLLB_LANGUAGES)
     apertus_count = len(APERTUS_LANGUAGES)
 
+    # Simplified professional header
     gr.Markdown(f"""
-    # 🌍 TraductAL - Multilingual Translation System
+    ## TraductAL — Professional Translation System
 
-    **Unified translation engine: NLLB-200 (200 languages) + Apertus8B (1,811 languages){tts_status_msg}{whisper_status_msg}**
-
-    **Available in interface**: {total_languages} languages ({nllb_count} NLLB + {apertus_count} Apertus specialist languages)
-    - **NLLB-200**: Major world languages (50+ most common)
-    - **Apertus-8B**: Swiss languages (6 Romansh variants) + Low-resource languages
-
-    **Capabilities**: Text Translation • Multi-language Speech-to-Text (100+ languages) • Text-to-Speech ({len(TTS_LANGUAGES)} languages) • Audio-to-Audio
+    Offline neural machine translation • {total_languages} languages ({nllb_count} NLLB + {apertus_count} specialist){tts_status_msg}{whisper_status_msg}
     """)
 
     with gr.Tabs():
         # Tab 1: Text Translation
-        with gr.TabItem("📝 Text Translation"):
-            gr.Markdown("### Translate text between languages")
+        with gr.TabItem("Text Translation"):
+            gr.Markdown("**Note**: NLLB-200-3.3B recommended for literary translation (highest quality)")
 
             with gr.Row():
                 with gr.Column():
@@ -484,17 +489,25 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
                     value="Auto (Recommended)",
                     label="Translation Engine"
                 )
+                nllb_model_choice = gr.Dropdown(
+                    choices=list(NLLB_MODEL_OPTIONS.keys()),
+                    value="NLLB-200-3.3B (Highest Quality)",
+                    label="NLLB Model (when using NLLB engine)",
+                    filterable=False
+                )
                 show_details = gr.Checkbox(
                     value=True,
                     label="Show translation details"
                 )
 
-            translate_btn = gr.Button("🌍 Translate", variant="primary", size="lg")
+            with gr.Row():
+                translate_btn = gr.Button("Translate", variant="primary", size="lg")
+                clear_btn = gr.Button("Clear", variant="secondary", size="lg")
 
             details_output = gr.Markdown(label="Details")
 
             # Example translations
-            gr.Markdown("### 💡 Try these examples:")
+            gr.Markdown("**Examples:**")
             gr.Examples(
                 examples=[
                     ["Guten Tag! Wie geht es Ihnen?", "German", "Romansh Sursilvan"],
@@ -508,14 +521,19 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
 
             translate_btn.click(
                 fn=translate_text,
-                inputs=[input_text, src_lang, tgt_lang, engine_choice, show_details],
+                inputs=[input_text, src_lang, tgt_lang, engine_choice, nllb_model_choice, show_details],
                 outputs=[output_text, details_output]
             )
 
+            clear_btn.click(
+                fn=lambda: ("", "", ""),
+                inputs=[],
+                outputs=[input_text, output_text, details_output]
+            )
+
         # Tab 2: Batch Translation
-        with gr.TabItem("📄 Batch Translation"):
-            gr.Markdown("### Translate multiple lines from a file")
-            gr.Markdown("Upload a text file with one sentence per line")
+        with gr.TabItem("Batch Translation"):
+            gr.Markdown("**Batch mode:** Translate multiple lines from file or pasted text. One sentence per line.")
 
             with gr.Row():
                 with gr.Column():
@@ -547,7 +565,9 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
                         label="Translations"
                     )
 
-            batch_btn = gr.Button("🌍 Translate All", variant="primary", size="lg")
+            with gr.Row():
+                batch_btn = gr.Button("Translate All", variant="primary", size="lg")
+                batch_clear_btn = gr.Button("Clear", variant="secondary", size="lg")
 
             def load_file_content(file):
                 if file is None:
@@ -567,10 +587,15 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
                 outputs=[batch_output]
             )
 
+            batch_clear_btn.click(
+                fn=lambda: ("", ""),
+                inputs=[],
+                outputs=[batch_file, batch_output]
+            )
+
         # Tab 3: Speech to Text (STT) - Multi-language with Whisper
-        with gr.TabItem("🎤 Speech to Text (STT)"):
-            gr.Markdown("### Transcribe audio to text (100+ languages)")
-            gr.Markdown("Upload audio file or record directly")
+        with gr.TabItem("Speech to Text"):
+            gr.Markdown("**Automatic speech recognition:** Transcribe audio to text (100+ languages). Upload file or record directly.")
 
             with gr.Row():
                 with gr.Column():
@@ -585,7 +610,7 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
                         type="filepath",
                         label="Audio Input"
                     )
-                    transcribe_btn = gr.Button("📝 Transcribe", variant="primary")
+                    transcribe_btn = gr.Button("Transcribe", variant="primary")
 
                 with gr.Column():
                     transcription_output = gr.Textbox(
@@ -594,11 +619,7 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
                     )
 
             gr.Markdown("""
-            **STT Engines**:
-            - **Whisper** (OpenAI open-source): 100+ languages including English, German, French, Spanish, Italian, Russian, Hindi, Arabic, Chinese, Japanese, Korean
-            - **wav2vec2**: Romansh Sursilvan specialist
-
-            The system automatically selects the appropriate engine based on the source language.
+            **Engines:** Whisper (100+ languages) • wav2vec2 (Romansh Sursilvan). Automatic engine selection based on source language.
             """)
 
             transcribe_btn.click(
@@ -608,9 +629,8 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
             )
 
         # Tab 4: Audio Translation Pipeline - Multi-language
-        with gr.TabItem("🎤→🌍 Audio Translation"):
-            gr.Markdown("### Complete pipeline: Audio (any language) → Transcription → Translation")
-            gr.Markdown("Upload audio in any language and get automatic translation")
+        with gr.TabItem("Audio Translation"):
+            gr.Markdown("**Complete pipeline:** Audio → Transcription → Translation. Upload audio in any language for automatic transcription and translation.")
 
             with gr.Row():
                 with gr.Column():
@@ -631,26 +651,17 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
                         label="Translate to",
                         filterable=True
                     )
-                    audio_translate_btn = gr.Button("🎤→🌍 Transcribe & Translate", variant="primary")
+                    audio_translate_btn = gr.Button("Transcribe & Translate", variant="primary")
 
                 with gr.Column():
                     audio_transcription = gr.Textbox(
                         lines=4,
-                        label="1️⃣ Transcription"
+                        label="Transcription"
                     )
                     audio_translation = gr.Textbox(
                         lines=4,
-                        label="2️⃣ Translation"
+                        label="Translation"
                     )
-
-            gr.Markdown("""
-            **Use cases**:
-            - Transcribe and translate Romansh radio broadcasts
-            - Convert English podcasts to German text
-            - Translate Russian news to French
-            - Process Hindi audio to Arabic text
-            - Any language combination supported
-            """)
 
             audio_translate_btn.click(
                 fn=audio_to_translation,
@@ -660,9 +671,8 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
 
         # Tab 5: Text-to-Speech (TTS)
         if tts_enabled:
-            with gr.TabItem("🔊 Text-to-Speech"):
-                gr.Markdown("### Convert text to natural speech")
-                gr.Markdown("Generate audio from text in any supported language")
+            with gr.TabItem("Text-to-Speech"):
+                gr.Markdown("**Speech synthesis:** Generate audio from text in any supported language.")
 
                 with gr.Row():
                     with gr.Column():
@@ -677,7 +687,7 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
                             label="Speech Language",
                             filterable=True
                         )
-                        tts_btn = gr.Button("🔊 Generate Speech", variant="primary", size="lg")
+                        tts_btn = gr.Button("Generate Speech", variant="primary", size="lg")
 
                     with gr.Column():
                         tts_audio_output = gr.Audio(
@@ -689,7 +699,7 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
                             label="Status"
                         )
 
-                gr.Markdown("### 💡 Try these examples:")
+                gr.Markdown("**Examples:**")
                 gr.Examples(
                     examples=[
                         ["Hello! Welcome to the TraductAL translation system.", "English"],
@@ -709,9 +719,8 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
 
         # Tab 6: Translation + TTS
         if tts_enabled:
-            with gr.TabItem("🌍→🔊 Translate & Speak"):
-                gr.Markdown("### Translate text and convert to speech")
-                gr.Markdown("Complete pipeline: Text translation + audio generation")
+            with gr.TabItem("Translate & Speak"):
+                gr.Markdown("**Complete pipeline:** Text translation + speech synthesis.")
 
                 with gr.Row():
                     with gr.Column():
@@ -739,7 +748,7 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
                             label="Translation"
                         )
 
-                translate_tts_btn = gr.Button("🌍→🔊 Translate & Speak", variant="primary", size="lg")
+                translate_tts_btn = gr.Button("Translate & Speak", variant="primary", size="lg")
 
                 translate_tts_audio = gr.Audio(
                     label="Generated Speech",
@@ -750,11 +759,6 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
                     label="Status"
                 )
 
-                gr.Markdown("""
-                **Use case**: Perfect for creating spoken translations, language learning,
-                or generating audio content in multiple languages.
-                """)
-
                 translate_tts_btn.click(
                     fn=translate_and_speak,
                     inputs=[translate_tts_text, translate_tts_src_lang, translate_tts_tgt_lang],
@@ -763,9 +767,8 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
 
         # Tab 7: Complete Audio Pipeline (Audio → Audio) - Multi-language
         if tts_enabled:
-            with gr.TabItem("🎤→🔊 Audio to Audio"):
-                gr.Markdown("### Complete audio pipeline: Audio (any language) → Transcription → Translation → Speech")
-                gr.Markdown("Upload audio in any language and get spoken translation in target language")
+            with gr.TabItem("Audio to Audio"):
+                gr.Markdown("**Complete audio pipeline:** Audio → Transcription → Translation → Speech. Upload audio in any language for spoken translation.")
 
                 with gr.Row():
                     with gr.Column():
@@ -786,36 +789,25 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
                             label="Target Language (with speech)",
                             filterable=True
                         )
-                        pipeline_btn = gr.Button("🎤→🔊 Complete Pipeline", variant="primary", size="lg")
+                        pipeline_btn = gr.Button("Complete Pipeline", variant="primary", size="lg")
 
                     with gr.Column():
                         pipeline_transcription = gr.Textbox(
                             lines=3,
-                            label="1️⃣ Transcription"
+                            label="Transcription"
                         )
                         pipeline_translation = gr.Textbox(
                             lines=3,
-                            label="2️⃣ Translation"
+                            label="Translation"
                         )
                         pipeline_audio_output = gr.Audio(
-                            label="3️⃣ Generated Speech",
+                            label="Generated Speech",
                             type="filepath"
                         )
                         pipeline_status = gr.Textbox(
                             lines=2,
                             label="Status"
                         )
-
-                gr.Markdown("""
-                **Use cases**:
-                - Translate Romansh radio broadcasts to spoken German/French/English
-                - Convert English podcasts to spoken Spanish
-                - Transform Russian news audio to spoken French
-                - Process Hindi audio to spoken Arabic
-                - Any combination of supported languages
-
-                **Example workflow**: Upload English audio → Get spoken Hindi translation
-                """)
 
                 pipeline_btn.click(
                     fn=audio_to_audio_pipeline,
@@ -824,83 +816,53 @@ with gr.Blocks(title="TraductAL - Multilingual Translation System", theme=gr.the
                 )
 
         # Tab 8: About & Info
-        with gr.TabItem("ℹ️ About"):
+        with gr.TabItem("About"):
             gr.Markdown("""
             ## About TraductAL
 
-            ### 🎯 System Overview
+            ### Translation Engines
 
-            This application combines two state-of-the-art translation engines:
+            **NLLB-200** (Meta AI)
+            - 200 languages, seq2seq architecture
+            - Models: 3.3B parameters (recommended), 1.3B, distilled-1.3B
+            - Inference: 0.5-2s per sentence
 
-            #### 1. **NLLB-200** (Meta AI)
-            - 200 languages supported
-            - Seq2seq architecture
-            - Fast inference (0.5-2s per sentence)
-            - Best for common language pairs
-
-            #### 2. **Apertus8B** (Swiss AI - ETH Zurich & EPFL)
-            - 1,811 languages supported
-            - Specialized for Swiss languages
-            - All 6 Romansh variants
+            **Apertus8B** (Swiss AI - ETH Zurich & EPFL)
+            - 1,811 languages, causal LLM architecture
+            - 8B parameters, specialized for Swiss languages
+            - All 6 Romansh variants supported
             - Released September 2025
-            - 8B parameters, fully open source
 
-            ### 🇨🇭 Romansh Support
+            ### Romansh Variants
 
-            **Supported Variants:**
-            - Sursilvan (55% of speakers)
-            - Vallader (20%)
-            - Puter (12%)
-            - Surmiran (10%)
-            - Sutsilvan (3%)
-            - Rumantsch Grischun (official standard)
+            Sursilvan (55%), Vallader (20%), Puter (12%), Surmiran (10%), Sutsilvan (3%), Rumantsch Grischun (standard)
 
-            ### 🎤 Speech Recognition (STT)
+            ### Speech Recognition
 
-            **Multi-language support with automatic engine selection:**
+            **Whisper** (OpenAI): 100+ languages, whisper-base (74M parameters)
 
-            #### Whisper (OpenAI open-source)
-            - 100+ languages supported
-            - Automatic language detection
-            - High-quality transcription
-            - Model: whisper-base (74M parameters)
-            - Languages: English, German, French, Italian, Spanish, Portuguese, Russian, Hindi, Arabic, Chinese, Japanese, Korean, and many more
+            **wav2vec2-xlsr-romansh_sursilvan**: Romansh specialist, fine-tuned on Mozilla Common Voice 8.0. WER: 13.82%, CER: 3.02%
 
-            #### wav2vec2-xlsr-romansh_sursilvan
-            - Romansh Sursilvan specialist
-            - Fine-tuned on Mozilla Common Voice 8.0
-            - WER: 13.82% | CER: 3.02%
-            - Used automatically for Romansh audio
+            ### Training Data
 
-            ### 📊 Dataset
+            swiss-ai/apertus-posttrain-romansh: 46,092 German-Romansh parallel sentences (CC-BY-4.0)
 
-            **Training Data**: swiss-ai/apertus-posttrain-romansh
-            - 46,092 German-Romansh parallel sentences
-            - Dictionary translations, idioms, instructions
-            - CC-BY-4.0 License
+            ### Privacy & Compliance
 
-            ### 🔒 Privacy
+            All processing performed locally. No external data transmission. GDPR compliant.
 
-            - 100% offline processing
-            - No data sent to external servers
-            - All models run locally
-            - GDPR compliant
+            ### Resources
 
-            ### 📚 Resources
+            Apertus8B: [huggingface.co/swiss-ai/Apertus-8B-2509](https://huggingface.co/swiss-ai/Apertus-8B-2509)
+            NLLB-200: [huggingface.co/facebook/nllb-200-1.3B](https://huggingface.co/facebook/nllb-200-1.3B)
+            Dataset: [huggingface.co/datasets/swiss-ai/apertus-posttrain-romansh](https://huggingface.co/datasets/swiss-ai/apertus-posttrain-romansh)
 
-            - **Apertus8B**: [huggingface.co/swiss-ai/Apertus-8B-2509](https://huggingface.co/swiss-ai/Apertus-8B-2509)
-            - **NLLB-200**: [huggingface.co/facebook/nllb-200-1.3B](https://huggingface.co/facebook/nllb-200-1.3B)
-            - **Dataset**: [huggingface.co/datasets/swiss-ai/apertus-posttrain-romansh](https://huggingface.co/datasets/swiss-ai/apertus-posttrain-romansh)
-
-            ---
-
-            **Version**: 1.0.0 | **License**: Apache 2.0
+            Version 1.0.0 • Apache 2.0 License
             """)
 
     gr.Markdown("""
     ---
-    💡 **Tip**: The system automatically selects the best engine - Apertus8B for Romansh translations,
-    NLLB-200 for other language pairs.
+    **Note:** The system automatically selects the best engine — Apertus8B for Romansh translations, NLLB-200 for other language pairs.
     """)
 
 if __name__ == "__main__":
