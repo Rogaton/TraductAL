@@ -23,6 +23,12 @@ except ImportError as e:
     print("Please activate conda environment: conda activate neural_mt_offline")
     sys.exit(1)
 
+try:
+    from text_chunker import SmartTextChunker
+except ImportError:
+    # Chunker not available, will use basic sentence splitting
+    SmartTextChunker = None
+
 class EnhancedOfflineTranslator:
     """Enhanced offline neural machine translator supporting MT5 and NLLB-200."""
     
@@ -192,31 +198,43 @@ class EnhancedOfflineTranslator:
             return False
     
     def translate_nllb(self, text, src_lang, tgt_lang):
-        """Translate using NLLB-200 model."""
+        """Translate using NLLB-200 model with smart chunking for long texts."""
         if src_lang not in self.nllb_languages or tgt_lang not in self.nllb_languages:
             return f"❌ Language not supported. Available: {list(self.nllb_languages.keys())}"
-        
-        # Split into sentences for better handling
-        import re
-        sentences = re.split(r'(?<=[.!?])\s+', text.strip())
-        if len(sentences) <= 1:
-            sentences = [text]
-        
+
         tokenizer = self.tokenizers[self.current_model_name]
         tokenizer.src_lang = self.nllb_languages[src_lang]
-        
+
+        # Use smart chunking if available
+        if SmartTextChunker:
+            chunker = SmartTextChunker(max_tokens=400, tokenizer=tokenizer)
+            chunks = chunker.chunk_text(text)
+
+            # If text was chunked, show info
+            if len(chunks) > 1:
+                print(f"📝 Long text detected: splitting into {len(chunks)} chunks for optimal translation")
+        else:
+            # Fallback to basic sentence splitting
+            import re
+            sentences = re.split(r'(?<=[.!?])\s+', text.strip())
+            chunks = [(s, 'sentence') for s in sentences if s.strip()]
+
         translations = []
         device = next(self.current_model.parameters()).device
         tgt_lang_code = self.nllb_languages[tgt_lang]
         forced_bos_token_id = getattr(tokenizer, 'lang_code_to_id', {}).get(tgt_lang_code) or tokenizer.convert_tokens_to_ids(tgt_lang_code)
-        
-        for sentence in sentences:
-            if not sentence.strip():
+
+        for i, (chunk, chunk_type) in enumerate(chunks, 1):
+            if not chunk.strip():
                 continue
-                
-            inputs = tokenizer(sentence, return_tensors="pt", padding=True, truncation=True, max_length=512)
+
+            # Show progress for long texts
+            if len(chunks) > 5 and i % 5 == 0:
+                print(f"   Progress: {i}/{len(chunks)} chunks translated...")
+
+            inputs = tokenizer(chunk, return_tensors="pt", padding=True, truncation=True, max_length=512)
             inputs = {k: v.to(device) for k, v in inputs.items()}
-            
+
             with torch.no_grad():
                 generated_tokens = self.current_model.generate(
                     **inputs,
@@ -226,11 +244,25 @@ class EnhancedOfflineTranslator:
                     early_stopping=True,
                     no_repeat_ngram_size=2
                 )
-            
+
             translation = tokenizer.batch_decode(generated_tokens, skip_special_tokens=True)[0]
             translations.append(translation)
-        
-        return ' '.join(translations)
+
+        if len(chunks) > 1:
+            print(f"✅ Translation complete: {len(chunks)} chunks processed")
+
+        # Join translations, preserving paragraph breaks for paragraph-level chunks
+        if SmartTextChunker and any(ct == 'paragraph' for _, ct in chunks):
+            # Preserve paragraph structure
+            result = []
+            for translation, (_, chunk_type) in zip(translations, chunks):
+                result.append(translation)
+                if chunk_type == 'paragraph':
+                    result.append('\n\n')
+            return ''.join(result).strip()
+        else:
+            # Standard sentence joining
+            return ' '.join(translations)
     
     def translate_mt5(self, text, src_lang, tgt_lang):
         """Translate using MT5/T5 model."""
@@ -274,11 +306,20 @@ class EnhancedOfflineTranslator:
         
         if not self.current_model:
             # Auto-select best available model
+            # Priority: nllb_200_3.3b > nllb_200_1.3b > nllb_200_distilled_1.3b > others
             if any("nllb" in name for name in self.available_models):
-                best_model = next(name for name in self.available_models if "nllb" in name)
+                # Prefer 3.3B model for best quality
+                if "nllb_200_3.3b" in self.available_models:
+                    best_model = "nllb_200_3.3b"
+                elif "nllb_200_1.3b" in self.available_models:
+                    best_model = "nllb_200_1.3b"
+                elif "nllb_200_distilled_1.3b" in self.available_models:
+                    best_model = "nllb_200_distilled_1.3b"
+                else:
+                    best_model = next(name for name in self.available_models if "nllb" in name)
             else:
                 best_model = next(iter(self.available_models))
-            
+
             if not self.load_model(best_model):
                 return "❌ No models available"
         

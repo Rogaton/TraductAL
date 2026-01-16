@@ -20,6 +20,12 @@ except ImportError as e:
     print(f"Missing: {e}")
     sys.exit(1)
 
+try:
+    from text_chunker import SmartTextChunker
+except ImportError:
+    # Chunker not available, will process text as single unit
+    SmartTextChunker = None
+
 
 class ApertusTranslator:
     """
@@ -34,11 +40,22 @@ class ApertusTranslator:
         # Try multiple paths in order of preference
         if model_path is None:
             # 1. Environment variable
-            # 2. Relative to project root
-            # 3. Common install locations
-            model_path = os.environ.get('APERTUS_PATH') or \
-                         os.environ.get('APERTUS8B_PATH') or \
-                         './models/apertus-8b'
+            # 2. Common install locations
+            # 3. Relative to project root
+            possible_paths = [
+                os.environ.get('APERTUS_PATH'),
+                os.environ.get('APERTUS8B_PATH'),
+                '/home/aldn/Apertus8B',
+                './models/apertus-8b'
+            ]
+            # Use first path that exists and has files
+            for path in possible_paths:
+                if path and Path(path).exists() and any(Path(path).iterdir()):
+                    model_path = path
+                    break
+            else:
+                # Fallback if nothing exists
+                model_path = './models/apertus-8b'
 
         self.model_path = Path(model_path)
         self.model = None
@@ -117,7 +134,7 @@ class ApertusTranslator:
 
     def translate(self, text, src_lang='de', tgt_lang='rm-sursilv', max_tokens=512):
         """
-        Translate text using Apertus8B.
+        Translate text using Apertus8B with smart chunking for long texts.
 
         Args:
             text: Source text to translate
@@ -136,74 +153,114 @@ class ApertusTranslator:
         src_name = self.supported_languages.get(src_lang, src_lang)
         tgt_name = self.supported_languages.get(tgt_lang, tgt_lang)
 
-        # Create translation prompt
-        # Apertus8B is a causal LLM, so we use instruction prompting
-        prompt = f"""Translate the following text from {src_name} to {tgt_name}.
+        start_time = time.time()
+
+        # Use smart chunking if available
+        if SmartTextChunker:
+            chunker = SmartTextChunker(max_tokens=400, tokenizer=self.tokenizer)
+            chunks = chunker.chunk_text(text)
+
+            # If text was chunked, show info
+            if len(chunks) > 1:
+                print(f"📝 Long text detected: splitting into {len(chunks)} chunks for optimal translation")
+        else:
+            # Process as single chunk
+            chunks = [(text, 'full')]
+
+        translations = []
+
+        for i, (chunk, chunk_type) in enumerate(chunks, 1):
+            if not chunk.strip():
+                continue
+
+            # Show progress for long texts
+            if len(chunks) > 5 and i % 5 == 0:
+                print(f"   Progress: {i}/{len(chunks)} chunks translated...")
+
+            # Create translation prompt
+            prompt = f"""Translate the following text from {src_name} to {tgt_name}.
 Provide only the translation, without explanations.
 
-{src_name}: {text}
+{src_name}: {chunk}
 {tgt_name}:"""
 
-        try:
-            start_time = time.time()
+            try:
+                # Prepare messages for chat template
+                messages = [
+                    {"role": "user", "content": prompt}
+                ]
 
-            # Prepare messages for chat template
-            messages = [
-                {"role": "user", "content": prompt}
-            ]
-
-            # Apply chat template
-            text_input = self.tokenizer.apply_chat_template(
-                messages,
-                tokenize=False,
-                add_generation_prompt=True
-            )
-
-            # Tokenize
-            model_inputs = self.tokenizer(
-                [text_input],
-                return_tensors="pt",
-                padding=True,
-                truncation=True
-            ).to(self.model.device)
-
-            # Generate translation
-            with torch.no_grad():
-                generated_ids = self.model.generate(
-                    **model_inputs,
-                    max_new_tokens=max_tokens,
-                    temperature=0.7,
-                    top_p=0.9,
-                    do_sample=True,
-                    pad_token_id=self.tokenizer.pad_token_id,
-                    eos_token_id=self.tokenizer.eos_token_id
+                # Apply chat template
+                text_input = self.tokenizer.apply_chat_template(
+                    messages,
+                    tokenize=False,
+                    add_generation_prompt=True
                 )
 
-            # Decode output (skip input prompt)
-            output_ids = generated_ids[0][len(model_inputs.input_ids[0]):]
-            translation = self.tokenizer.decode(output_ids, skip_special_tokens=True)
+                # Tokenize
+                model_inputs = self.tokenizer(
+                    [text_input],
+                    return_tensors="pt",
+                    padding=True,
+                    truncation=True
+                ).to(self.model.device)
 
-            # Clean up translation (remove any trailing explanations)
-            translation = translation.strip()
-            # If translation contains multiple lines, take first substantial one
-            lines = [l.strip() for l in translation.split('\n') if l.strip()]
-            if lines:
-                translation = lines[0]
+                # Generate translation
+                with torch.no_grad():
+                    generated_ids = self.model.generate(
+                        **model_inputs,
+                        max_new_tokens=max_tokens,
+                        temperature=0.7,
+                        top_p=0.9,
+                        do_sample=True,
+                        pad_token_id=self.tokenizer.pad_token_id,
+                        eos_token_id=self.tokenizer.eos_token_id
+                    )
 
-            translation_time = time.time() - start_time
+                # Decode output (skip input prompt)
+                output_ids = generated_ids[0][len(model_inputs.input_ids[0]):]
+                translation = self.tokenizer.decode(output_ids, skip_special_tokens=True)
 
-            return {
-                "translation": translation,
-                "model": "Apertus-8B",
-                "model_type": "Causal LLM (1811 languages)",
-                "time": f"{translation_time:.2f}s",
-                "src_lang": f"{src_lang} ({src_name})",
-                "tgt_lang": f"{tgt_lang} ({tgt_name})",
-                "device": self.device
-            }
+                # Clean up translation (remove any trailing explanations)
+                translation = translation.strip()
+                # If translation contains multiple lines, take first substantial one
+                lines = [l.strip() for l in translation.split('\n') if l.strip()]
+                if lines:
+                    translation = lines[0]
 
-        except Exception as e:
-            return {"error": f"Translation failed: {str(e)}"}
+                translations.append(translation)
+
+            except Exception as e:
+                print(f"⚠️  Error translating chunk {i}: {str(e)}")
+                translations.append(f"[Translation error: {str(e)}]")
+
+        if len(chunks) > 1:
+            print(f"✅ Translation complete: {len(chunks)} chunks processed")
+
+        translation_time = time.time() - start_time
+
+        # Join translations, preserving paragraph breaks for paragraph-level chunks
+        if SmartTextChunker and any(ct == 'paragraph' for _, ct in chunks):
+            # Preserve paragraph structure
+            result = []
+            for translation, (_, chunk_type) in zip(translations, chunks):
+                result.append(translation)
+                if chunk_type == 'paragraph':
+                    result.append('\n\n')
+            final_translation = ''.join(result).strip()
+        else:
+            # Standard joining
+            final_translation = ' '.join(translations)
+
+        return {
+            "translation": final_translation,
+            "model": "Apertus-8B",
+            "model_type": "Causal LLM (1811 languages)",
+            "time": f"{translation_time:.2f}s",
+            "src_lang": f"{src_lang} ({src_name})",
+            "tgt_lang": f"{tgt_lang} ({tgt_name})",
+            "device": self.device
+        }
 
     def list_languages(self):
         """List supported languages."""
