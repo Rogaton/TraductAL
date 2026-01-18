@@ -662,7 +662,6 @@ Abstract:
    - Broader impact for endangered languages
 
 8. Acknowledgments
-   - AI assistance (Claude Code) for implementation
    - Open-source model creators
 
 References

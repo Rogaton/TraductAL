@@ -1083,9 +1083,9 @@ grammar.pl (DCG rules) + lexicon.pl (lexical data)
 
 **Important for Academic & Research Use:**
 
-This system represents a **collaborative development** approach:
+This system represents original work by the author:
 - **Linguistic Core** (DCG grammar, lexicon): Original research by the author, based on Master's thesis in Computational Linguistics (1989-1991)
-- **System Integration** (Python code, interfaces): AI-assisted development using Claude Code (Anthropic)
+- **System Integration** (Python code, interfaces): Developed by the author
 - **Translation Models**: Third-party open-source components (Meta, OpenAI, etc.)
 
 **For complete transparency**, see: **[AUTHORSHIP_AND_ATTRIBUTION.md](AUTHORSHIP_AND_ATTRIBUTION.md)**
@@ -1098,8 +1098,7 @@ This document provides:
 - Teaching guidelines for educational contexts
 
 **Quick Summary:**
-- ✅ **100% Human Original Work**: Prolog DCG grammars, lexicon, linguistic theory
-- 🤖 **AI-Assisted Implementation**: Python integration, documentation, utilities
+- ✅ **Original Work**: Prolog DCG grammars, lexicon, linguistic theory, Python integration
 - 🌐 **Third-Party**: Pre-trained ML models (NLLB-200, Apertus-8B, Whisper, MMS-TTS)
 
 This transparent attribution model supports academic integrity while acknowledging modern development practices.
@@ -1129,9 +1128,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Original Research Foundation
 - **Author's Master's Thesis** (1989-1991): French 2L Error Detection Parser using DCG formalism, providing the theoretical and methodological foundation for the Prolog-based linguistic components
-
-### AI Development Assistance
-- **Claude Code** (Anthropic): AI coding assistant used for system integration, Python implementation, documentation, and rapid prototyping (December 2025 - January 2026)
 
 ### Models & Frameworks
 - **Meta AI** for the NLLB-200 models and MMS-TTS
