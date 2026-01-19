@@ -1,4 +1,6 @@
-# TraductAL - Offline Neural Translation System
+# TraductAL - Multilingual, multimodal translation system
+
+**A neuro-symbolic approach combining neural MT with Prolog-based validation**
 
 **65+ languages • 100% offline • Privacy-focused • No data collection**
 
@@ -112,14 +114,21 @@ print(result["translation"])  # Bonjour le monde
 - **Prolog validation**: See `docs/DCG_PARSER_SUMMARY.md`
 - **All documentation**: Browse the `docs/` directory
 
-## 🛠️ Two Models, One System
+## 🛠️ Neuro-Symbolic Architecture
 
-TraductAL uses two translation engines:
+TraductAL combines neural and symbolic approaches:
 
+### Neural Translation Engines
 1. **NLLB-200** (Meta): Fast, accurate, 200+ languages
 2. **Apertus-8B**: Specialized for low-resource languages (1811 languages)
 
-The system automatically picks the best model for your language pair.
+### Symbolic Validation Layer
+3. **Treallo-Prolog**: Dependency grammar parser for glossary validation
+   - Checks and corrects potential neural model errors
+   - Uses Prolog-based lexicon and grammar rules
+   - Helps prevent hallucinations from NLLB-200 and Apertus LLMs
+
+The system automatically picks the best model for your language pair and validates outputs through the symbolic layer.
 
 ## 🎓 Academic Use
 

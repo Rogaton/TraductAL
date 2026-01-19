@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 TraductAL Gradio Web Interface
-Multilingual translation system with NLLB-200 + Apertus8B
+Multilingual, multimodal translation system
+A neuro-symbolic approach combining neural MT with Prolog-based validation
 Supports 66+ languages with STT/TTS capabilities
 """
 
@@ -435,7 +436,7 @@ def audio_to_audio_pipeline(audio_file, src_lang_name, tgt_lang_name):
 
 # Create Gradio interface with professional theme
 # Using Base theme for clean, professional look
-with gr.Blocks(title="TraductAL - Professional Translation System", theme=gr.themes.Base()) as demo:
+with gr.Blocks(title="TraductAL - Multilingual, multimodal translation system", theme=gr.themes.Base()) as demo:
 
     tts_status_msg = " + TTS" if tts_enabled else ""
     whisper_status_msg = " + STT" if whisper_enabled else ""
@@ -447,7 +448,8 @@ with gr.Blocks(title="TraductAL - Professional Translation System", theme=gr.the
 
     # Simplified professional header
     gr.Markdown(f"""
-    ## TraductAL — Professional Translation System
+    ## TraductAL — Multilingual, multimodal translation system
+    *A neuro-symbolic approach combining neural MT with Prolog-based validation*
 
     Offline neural machine translation • {total_languages} languages ({nllb_count} NLLB + {apertus_count} specialist){tts_status_msg}{whisper_status_msg}
     """)
@@ -820,6 +822,12 @@ with gr.Blocks(title="TraductAL - Professional Translation System", theme=gr.the
             gr.Markdown("""
             ## About TraductAL
 
+            **TraductAL** is a multilingual, multimodal translation system using a neuro-symbolic approach that combines:
+            - **Neural models**: NLLB-200 and Apertus-8B for translation
+            - **Symbolic validation**: Treallo-Prolog dependency grammar parser for error checking and correction
+
+            This hybrid architecture helps identify and correct potential hallucinations from neural models.
+
             ### Translation Engines
 
             **NLLB-200** (Meta AI)
@@ -832,6 +840,11 @@ with gr.Blocks(title="TraductAL - Professional Translation System", theme=gr.the
             - 8B parameters, specialized for Swiss languages
             - All 6 Romansh variants supported
             - Released September 2025
+
+            **Treallo-Prolog Parser**
+            - Symbolic validation layer using dependency grammar
+            - Parses glossaries with Prolog-based lexicon
+            - Helps detect and correct neural model errors and hallucinations
 
             ### Romansh Variants
 
@@ -867,7 +880,8 @@ with gr.Blocks(title="TraductAL - Professional Translation System", theme=gr.the
 
 if __name__ == "__main__":
     print("\n" + "="*60)
-    print("🌍 TraductAL - Multilingual Translation System")
+    print("🌍 TraductAL - Multilingual, multimodal translation system")
+    print("   A neuro-symbolic approach combining neural MT with Prolog")
     print("="*60)
     print("🚀 Starting Gradio interface...")
     print("📡 Server will be available at: http://localhost:7860")

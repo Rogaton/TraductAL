@@ -1,6 +1,8 @@
-# TraductAL - Hybrid Neural-Symbolic Translation Engine
+# TraductAL - Multilingual, multimodal translation system
 
-A completely offline, privacy-focused multilingual translation system supporting **50+ languages** and combining two state-of-the-art translation engines with Prolog-based linguistic validation. The system uses **Meta's NLLB-200** for mainstream languages (200+ available) and the open-source **Apertus-8B** LLM for low-resource and endangered languages (1811 languages), with **Trealla Prolog** DCG parsers providing symbolic validation and error correction.
+**A neuro-symbolic approach combining neural MT with Prolog-based validation**
+
+A completely offline, privacy-focused multilingual translation system supporting **50+ languages** and combining two state-of-the-art neural translation engines with Prolog-based symbolic validation. The system uses **Meta's NLLB-200** for mainstream languages (200+ available) and the open-source **Apertus-8B** LLM for low-resource and endangered languages (1811 languages), with **Trealla Prolog** DCG parsers providing symbolic validation and error correction to prevent hallucinations.
 
 ## 🏗️ Architecture Overview
 
