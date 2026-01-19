@@ -231,5 +231,3 @@ apertus-8b/
 # Configuration files with local paths
 config.json
 local_config.json
-
-.claude/
