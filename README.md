@@ -123,7 +123,7 @@ TraductAL combines neural and symbolic approaches:
 2. **Apertus-8B**: Specialized for low-resource languages (1811 languages)
 
 ### Symbolic Validation Layer
-3. **Treallo-Prolog**: Dependency grammar parser for glossary validation
+3. **Trealla-Prolog**: Dependency grammar parser for glossary validation
    - Checks and corrects potential neural model errors
    - Uses Prolog-based lexicon and grammar rules
    - Helps prevent hallucinations from NLLB-200 and Apertus LLMs
