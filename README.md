@@ -1,4 +1,4 @@
-# TraductAL - Multilingual, multimodal translation system
+# TraductAL - Multilingual, Multimodal Translation System
 
 **A neuro-symbolic approach combining neural MT with Prolog-based validation**
 
